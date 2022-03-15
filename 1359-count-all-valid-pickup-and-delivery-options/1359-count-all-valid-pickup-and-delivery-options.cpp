@@ -1,8 +1,9 @@
 class Solution {
 public:
     int countOrders(int n) {
-        if(n<=0) return 0;
-        if(n==1) return 1;
-        return (1ll*n*(2*n-1)*countOrders(n-1))%((int)(1e9+7));
+        long long val = 1, mod = 1e9+7;
+        for(int i=2 ; i<=n ; ++i)
+            val = (val*(2*i-1)*i)%mod;
+        return val;
     }
 };
