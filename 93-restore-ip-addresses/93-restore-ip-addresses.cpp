@@ -1,43 +1,23 @@
 class Solution {
 public:
-    vector<string> a;
-    void h(string &ip, int i, string &t, int dot) {
-        if(i >= ip.size()) {
-            if(dot==0)
-                a.push_back(t);
-            return;
-        }
-        if(dot==0)
-            return;
-        if(ip[i] == '0') {
-            t += string(1, ip[i]) + ".";
-            h(ip, i+1, t, dot-1);
-            t.pop_back();
-            t.pop_back();
-        }
-        else {
-            int val=0, cnt=0, index=0;
-            while(i+cnt<ip.size()) {
-                val = (val*10) + (ip[i+cnt]-'0');
-                if(val>255)
-                    break;
-                string temp(1, ip[i+cnt]);
-                t += string(1, ip[i+cnt]) + ".";
-                h(ip, i+cnt+1, t, dot-1);
-                t.pop_back();
-                ++cnt;
-            }
-            while(cnt--)
-                t.pop_back();
-        }
-    }
-    vector<string> restoreIpAddresses(string s) {
-        a.clear();
-        string t="";
-        h(s, 0, t, 4);
-        for(int i=0 ; i<a.size() ; ++i)
-            a[i].pop_back();
-        sort(begin(a), end(a));
-        return a;
+    vector<string> restoreIpAddresses(string &s) {
+        vector<string> ret;
+        string ans;
+        
+        for (int a=1; a<=3; a++)
+        for (int b=1; b<=3; b++)
+        for (int c=1; c<=3; c++)
+        for (int d=1; d<=3; d++)
+            if (a+b+c+d == s.length()) {
+                int A = stoi(s.substr(0, a));
+                int B = stoi(s.substr(a, b));
+                int C = stoi(s.substr(a+b, c));
+                int D = stoi(s.substr(a+b+c, d));
+                if (A<=255 && B<=255 && C<=255 && D<=255)
+                    if ( (ans=to_string(A)+"."+to_string(B)+"."+to_string(C)+"."+to_string(D)).length() == s.length()+3)
+                        ret.push_back(ans);
+            }    
+        
+        return ret;
     }
 };
