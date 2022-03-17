@@ -1,17 +1,13 @@
 class Solution {
 public:
-    int scoreOfParentheses(string S) {
-        stack<int> stack;
-        int cur = 0;
-        for (char i : S)
-            if (i == '(') {
-                stack.push(cur);
-                cur = 0;
-            }
-            else {
-                cur = stack.top() + max(cur*2, 1);
-                stack.pop();
-            }
-        return cur;
+    int scoreOfParentheses(string s) {
+        int ans=0, layers=0;
+        for(int i=0 ; i<s.size() ; ++i) {
+            if(s[i] == '(') layers++;
+            else layers--;
+            if(s[i]==')' and s[i-1]=='(')
+                ans += 1<<layers;
+        }
+        return ans;
     }
 };
