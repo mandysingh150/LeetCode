@@ -13,10 +13,8 @@ public:
                 seen[ans.back()-'a']=0;
                 ans.pop_back();
             }
-            if(!seen[s[i]-'a']) {
-                seen[s[i]-'a']=1;
-                ans.push_back(s[i]);
-            }
+            seen[s[i]-'a']=1;
+            ans.push_back(s[i]);
         }
         return ans;
     }
