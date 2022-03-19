@@ -1,34 +1,23 @@
 class Solution {
 public:
     string removeDuplicateLetters(string s) {
-        int len = s.size();
-        string res = "";
-        unordered_map<char, int> M;
-        unordered_map<char, bool> V;
-        stack<int> S;
-        
-        for (auto c : s) {
-            if (M.find(c) == M.end()) M[c] = 1;
-            else M[c]++; 
-        }
-        for (unordered_map<char, int>::iterator iter=M.begin(); iter!=M.end(); iter++) V[iter->first] = false;
-        
-        cout<<M.size()<<V.size()<<endl;
-        for (int i=0; i<len; i++) {
-            M[s[i]]--;
-            if (V[s[i]] == true) continue;
-            
-            while (!S.empty() and s[i] < s[S.top()] and M[s[S.top()]] > 0) {
-                V[s[S.top()]] = false;
-                S.pop();
+        // used to store the last occurence of every character
+        unordered_map<int,int> mp;
+        for(int i=0 ; i<s.size() ; ++i) mp[s[i]]=i;
+        string ans;
+        vector<bool> seen(26, 0);
+        for(int i=0 ; i<s.size() ; ++i) {
+            if(seen[s[i]-'a'])
+                continue;
+            while(!ans.empty() and ans.back()>s[i] and mp[ans.back()]>i) {
+                seen[ans.back()-'a']=0;
+                ans.pop_back();
             }
-            S.push(i);
-            V[s[i]] = true;
+            if(!seen[s[i]-'a']) {
+                seen[s[i]-'a']=1;
+                ans.push_back(s[i]);
+            }
         }
-        while (!S.empty()) {
-            res = s[S.top()] + res;
-            S.pop();
-        }
-        return res;
+        return ans;
     }
 };
