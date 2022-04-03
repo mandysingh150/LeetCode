@@ -6,12 +6,8 @@ public:
     Encrypter(vector<char> &keys, vector<string> &values, vector<string> &dictionary) {
         for (int i = 0; i < size(keys); i++)
             kv[keys[i]] = values[i];
-        for(auto str: dictionary) {
-            string temp="";
-            for (int i = 0;  i < str.size(); i++) 
-                temp += kv[str[i]];
-            dict[temp]++;
-        }            
+        for(auto str: dictionary)
+            dict[encrypt(str)]++;
     }
     
     string encrypt(string w) {
