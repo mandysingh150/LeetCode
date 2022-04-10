@@ -1,28 +1,27 @@
 class Solution {
 public:
     int calPoints(vector<string>& ops) {
-        stack<int> s;
+        int s[1001], in=-1;
         for(auto i: ops) {
             if(i[0] == 'C') {
-                s.pop();
+                in--;
             }
             else if(i[0] == 'D') {
-                s.push(s.top()*2);
+                in++;
+                s[in] = s[in-1]*2;
             }
             else if(i[0] == '+') {
-                auto t1=s.top(); s.pop();
-                int t = t1+s.top();
-                s.push(t1);
-                s.push(t);                
+                in++;
+                s[in] = s[in-1] + s[in-2];
             }
             else {
-                s.push(stoi(i));
+                in++;
+                s[in] = stoi(i);
             }
         }
         int val=0;
-        while(!s.empty()) {
-            val += s.top(); 
-            s.pop();
+        for(int i=0 ; i<=in ; ++i) {
+            val += s[i];
         }
         return val;
     }
