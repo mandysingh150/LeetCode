@@ -3,8 +3,9 @@ public:
     bool help(vector<int> &v, int skip, int tot) {
         tot--;  // one ball is placed on v[i]
         int i=0;
-        while(tot and lower_bound(v.begin(), v.end(), v[i]+skip)!=v.end()) {
-            i = lower_bound(v.begin(), v.end(), v[i]+skip)-v.begin();
+        vector<int>::iterator it;
+        while(tot and (it=lower_bound(v.begin()+i, v.end(), v[i]+skip))!=v.end()) {
+            i = it-v.begin();
             tot--;
         }
         return tot==0;
