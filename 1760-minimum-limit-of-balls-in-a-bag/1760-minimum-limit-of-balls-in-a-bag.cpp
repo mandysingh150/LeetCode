@@ -5,7 +5,7 @@ public:
         while(l<=h) {
             int mid = (l+h)>>1;
             int cnt=0;
-            for(auto i: nums) if(i>mid) cnt+=((i-1)/mid);
+            for(auto i: nums) if(i>mid) cnt+=(i-1)/mid;
             if(cnt <= maxOperations)
                 ans = mid, h=mid-1;
             else
