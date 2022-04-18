@@ -8,8 +8,12 @@ public:
         while(l<=h) {
             ll mid = (l+h)>>1;
             
-            // processing
-            ll sum = mid + (find_sum(mid-1) + (mid > index ? -find_sum(mid-index-1) : index-mid+1)) + (find_sum(mid-1) + (mid >= n-index ? -find_sum(mid-(n-index)) : n-index-mid));
+            // sum of current index
+            ll sum = mid +
+			    // left side sum
+			    (find_sum(mid-1) + (mid > index ? -find_sum(mid-index-1) : index-mid+1)) + 
+			    // right side sum
+			    (find_sum(mid-1) + (mid >= n-index ? -find_sum(mid-(n-index)) : n-index-mid));
             
             if(sum <= maxSum) {
                 ans = mid;
