@@ -11,25 +11,23 @@
  */
 class Solution {
 public:
-    int getLeftSubtreeHeight(TreeNode *root) {
-        if(!root)
-            return 0;
-        
-        int h=0;
-        while(root)
-            h++, root = root->left;
-        return h;
+    int common_height(TreeNode *root) {
+        int cnt=0;
+        while(root) {
+            root = root->left;
+            cnt++;
+        }
+        return cnt;
     }
     int countNodes(TreeNode* root) {
         if(!root)
             return 0;
         
-        int leftHeight = getLeftSubtreeHeight(root->left);
-        int rightHeight = getLeftSubtreeHeight(root->right);
+        int left_height = common_height(root->left);
+        int right_height = common_height(root->right);
         
-        if(leftHeight == rightHeight)
-            return (1<<leftHeight) + countNodes(root->right);
-        
-        return (1<<rightHeight) + countNodes(root->left);
+        if(left_height == right_height)
+            return (1<<left_height) + countNodes(root->right);
+        return (1<<right_height) + countNodes(root->left);
     }
 };
