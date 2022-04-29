@@ -1,24 +1,23 @@
 class Solution {
 public:
-    bool isBipartite(vector<vector<int>>& g) {
-        int n = g.size();
-        vector<int> part(n, -1);    // can be partitions - 0 and 1
-        queue<int> q;
-        for(int j=0 ; j<n ; ++j) {
-            if(part[j] > -1)
+    bool isBipartite(vector<vector<int>>& graph) {
+        vector<int> vis(graph.size(), -1);
+        for(int j=0 ; j<graph.size() ; ++j) {
+            if(vis[j] != -1)
                 continue;
+            queue<int> q;
             q.push(j);
-            part[j] = 0;
+            vis[j]=0;
             while(!q.empty()) {
-                auto node = q.front();
+                auto top = q.front();
                 q.pop();
 
-                for(auto i: g[node]) {
-                    if(part[i] == -1) {
-                        part[i] = 1-part[node];
+                for(auto i: graph[top]) {
+                    if(vis[i] == -1) {
+                        vis[i] = 1-vis[top];
                         q.push(i);
                     }
-                    if(part[i] == part[node])
+                    else if(vis[i] == vis[top])
                         return 0;
                 }
             }
