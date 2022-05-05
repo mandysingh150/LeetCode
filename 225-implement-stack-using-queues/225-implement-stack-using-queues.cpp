@@ -4,13 +4,12 @@ public:
     MyStack() {}
     
     void push(int x) {
-        queue<int> q2;
-        q2.push(x);
-        while(!q.empty()) {
-            q2.push(q.front());
+        q.push(x);
+        int sz = q.size();
+        while(--sz) {
+            q.push(q.front());
             q.pop();
         }
-        q = q2;
     }
     
     int pop() {
