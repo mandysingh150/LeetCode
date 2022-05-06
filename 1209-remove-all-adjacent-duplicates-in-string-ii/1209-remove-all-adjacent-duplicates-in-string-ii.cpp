@@ -1,6 +1,6 @@
 class Solution {
 public:
-    string removeDuplicates(string s, int k) {
+    string removeDuplicates(string &s, int k) {
         stack<pair<int,int>> st;
         for(int i=0 ; i<s.size() ; ) {
             int cnt=1, ch=s[i];
