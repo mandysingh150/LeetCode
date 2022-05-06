@@ -17,12 +17,12 @@ public:
             if(cnt > 0)
                 st.push({ch, cnt});
         }
-        string ans;
+        s="";
         while(!st.empty()) {
-            ans += string(st.top().second, st.top().first);
+            s += string(st.top().second, st.top().first);
             st.pop();
         }
-        reverse(ans.begin(), ans.end());
-        return ans;
+        reverse(s.begin(), s.end());
+        return s;
     }
 };
