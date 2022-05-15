@@ -11,18 +11,22 @@
  */
 class Solution {
 public:
-    unordered_map<int,int> mp;
-    int mx_depth;
+    int mx_depth, sum;
     void find_sum(TreeNode *root, int depth) {
         if(root) {
-            mx_depth = max(mx_depth, depth);
-            mp[depth] += root->val;
+            if(mx_depth < depth) {
+                mx_depth = depth;
+                sum = 0;
+            }
+            if(depth == mx_depth)
+                sum += root->val;
             find_sum(root->left, depth+1);
             find_sum(root->right, depth+1);
         }
     }
     int deepestLeavesSum(TreeNode* root) {
+        mx_depth = sum = 0;
         find_sum(root, 0);
-        return mp[mx_depth];
+        return sum;
     }
 };
