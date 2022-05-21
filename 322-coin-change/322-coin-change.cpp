@@ -9,10 +9,7 @@ public:
             return max;
         if(dp[in][x] != -1)
             return dp[in][x];
-        int a = h(coins, in+1, x), b=max;
-        if(x >= coins[in])
-            b = 1+h(coins, in, x-coins[in]);
-        return dp[in][x] = min(a, b);
+        return dp[in][x] = min(h(coins, in+1, x), 1+h(coins, in, x-coins[in]));
     }
     int coinChange(vector<int>& coins, int amount) {
         dp = vector<vector<int>>(coins.size(), vector<int>(amount+1, -1));
