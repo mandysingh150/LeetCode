@@ -8,7 +8,7 @@ public:
     int maxLength(string &s) {
         vector<char> v;
         v.push_back(s[0]);
-        for(int i=1 ; i<s.size() ; ++i) {
+        for(int i=0 ; i<s.size() ; ++i) {
             auto in = lower_bound(v.begin(), v.end(), s[i]) - v.begin();
             if(in == v.size()) {
                 v.push_back(s[i]);
