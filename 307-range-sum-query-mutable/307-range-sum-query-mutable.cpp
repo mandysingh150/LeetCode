@@ -1,10 +1,9 @@
 class NumArray {
     inline static int n;
 public:
-    vector<int> tree;
+    int tree[120000];
     NumArray(vector<int>& nums) {
         n = nums.size();
-        tree = vector<int>(nums.size()*4);
         build(nums, 1, 0, n-1);
     }
     
