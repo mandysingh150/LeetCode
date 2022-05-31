@@ -2,6 +2,7 @@ int dir[]={-1,0,1,0,-1};
 #define piii pair<int,pair<int,int>>
 class Solution {
 public:
+    // Dijkstra's algorithm for single-source shortest path problem
     int minimumObstacles(vector<vector<int>>& a) {
         int m=a.size(), n=a[0].size();
         priority_queue<piii, vector<piii>, greater<piii>> pq;
@@ -14,7 +15,7 @@ public:
             
             int val=top.first, r=top.second.first, c=top.second.second;
             if(r==m-1 and c==n-1)
-                break;
+                return val;
             
             for(int i=0 ; i<4 ; ++i) {
                 int row=r+dir[i] ,col=c+dir[i+1];
@@ -24,6 +25,6 @@ public:
                 }
             }
         }
-        return dist[m-1][n-1];
+        return -1;
     }
 };
