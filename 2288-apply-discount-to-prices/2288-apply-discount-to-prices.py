@@ -4,8 +4,7 @@ class Solution:
         for w in s.split():
             if w[0]=='$' and w[1:].isnumeric():
                 price=int(w[1:])
-                rem=(100-discount)/100
-                w=f'${(price*rem):.2f}'
+                w=f'${(price*((100-discount)/100)):.2f}'
             a.append(w)
         return ' '.join(a)
                 
