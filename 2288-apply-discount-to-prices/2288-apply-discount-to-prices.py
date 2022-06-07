@@ -1,10 +1,11 @@
 class Solution:
-    def discountPrices(self, sentence: str, discount: int) -> str:
-        ans = []
-        words = sentence.split()
-        for i, word in enumerate(words):
-            if word[0]=='$' and word[1:].isnumeric():
-                words[i] = f'${(((100-discount)/100.0)*int(word[1:])):.2f}'
-        return ' '.join(words)
-    
-    
+    def discountPrices(self, s: str, discount: int) -> str:
+        a = []
+        for w in s.split():
+            if w[0]=='$' and w[1:].isnumeric():
+                price=int(w[1:])
+                rem=(100-discount)/100
+                w=f'${(price*rem):.2f}'
+            a.append(w)
+        return ' '.join(a)
+                
