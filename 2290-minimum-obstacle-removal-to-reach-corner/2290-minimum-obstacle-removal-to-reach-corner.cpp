@@ -1,27 +1,25 @@
-int dir[]={-1,0,1,0,-1};
 #define tup tuple<int,int,int>
+int dir[]={-1,0,1,0,-1};
 class Solution {
 public:
     int minimumObstacles(vector<vector<int>>& a) {
-        // Dijkstra's algorithm
-        int m=a.size(), n=a[0].size();
-        // {obstacles, row, col}
         priority_queue<tup, vector<tup>, greater<tup>> pq;
-        vector<vector<int>> dist(m, vector<int>(n, INT_MAX-1));
-        dist[0][0] = a[0][0];
-        pq.push({0,0,0});
+        int m=a.size(), n=a[0].size();
+        vector<vector<int>> d(m, vector<int>(n, INT_MAX-1));
+        pq.push({0, 0, 0});
         while(!pq.empty()) {
-            auto [val, r, c] = pq.top();
+            auto [dis, row, col] = pq.top();
             pq.pop();
             
-            if(r==m-1 and c==n-1)
-                return val;
+            if(row == m-1 and col == n-1) {
+                return dis;
+            }
             
             for(int i=0 ; i<4 ; ++i) {
-                int row=r+dir[i], col=c+dir[i+1];
-                if(row>=0 and row<m and col>=0 and col<n and a[row][col]+val<dist[row][col]) {
-                    dist[row][col] = a[row][col]+dist[r][c];
-                    pq.push(tup{dist[row][col], row, col});
+                int r=dir[i]+row, c=dir[i+1]+col;
+                if(r>=0 and c>=0 and r<m and c<n and dis+a[r][c]<d[r][c]) {
+                    d[r][c] = a[r][c] + dis;
+                    pq.push(tup{d[r][c], r, c});
                 }
             }
         }
