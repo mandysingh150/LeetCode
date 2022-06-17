@@ -16,7 +16,8 @@ public:
             return nullptr;
         if(pre_si == pre_ei)
             return new TreeNode(pre[pre_si]);
-        
+
+        // CASE when right subtree is EMPTY
         if(pre[pre_si+1] == post[post_ei-1])
             return new TreeNode(pre[pre_si], 
                 h(pre, pre_si+1, pre_ei, post, post_si, post_ei-1), 
