@@ -9,26 +9,28 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+#define CAMERA_NOT_NEEDED 0
+#define CAMERA_USED 1
+#define CAMERA_NEEDED 2
 class Solution {
 public:
-    int ans;
-    string dfs(TreeNode *root) {
+    int ans = 0;
+    int dfs(TreeNode *root) {
         if(!root) {
-            return "covered";
+            return CAMERA_NOT_NEEDED;
         }
-        // "covered" - leaf's parent's parent
-        // "covering" - leaf's parent
-        // "to_be_covered" - leaf node
-        string left = dfs(root->left), right = dfs(root->right);
-        if(left=="to_be_covered" or right=="to_be_covered") {
+        // CAMERA_NOT_NEEDED - leaf's parent's parent
+        // CAMERA_USED - leaf's parent
+        // CAMERA_NEEDED - leaf node
+        int left = dfs(root->left), right = dfs(root->right);
+        if(left==CAMERA_NEEDED or right==CAMERA_NEEDED) {
             ans++;
-            return "covering";
+            return CAMERA_USED;
         }
-        return (left=="covering" or right=="covering") ? "covered" : "to_be_covered";
+        return (left==CAMERA_USED or right==CAMERA_USED) ? CAMERA_NOT_NEEDED : CAMERA_NEEDED;
     }
     int minCameraCover(TreeNode* root) {
-        ans=0;
         // we always want to add a camera at leaf's parent in order to minimize the # of cameras used
-        return (dfs(root)=="to_be_covered") + ans;
+        return (dfs(root)==CAMERA_NEEDED) + ans;
     }
 };
