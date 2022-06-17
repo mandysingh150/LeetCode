@@ -24,10 +24,11 @@ public:
             ans++;
             return "covering";
         }
-        return left=="covering" or right=="covering" ? "covered" : "to_be_covered";
+        return (left=="covering" or right=="covering") ? "covered" : "to_be_covered";
     }
     int minCameraCover(TreeNode* root) {
         ans=0;
+        // we always want to add a camera at leaf's parent in order to minimize the # of cameras used
         return (dfs(root)=="to_be_covered") + ans;
     }
 };
