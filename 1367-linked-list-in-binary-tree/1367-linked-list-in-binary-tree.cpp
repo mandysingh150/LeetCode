@@ -24,10 +24,9 @@ public:
     bool checkLL(ListNode* head, TreeNode* root) {
         head = head->next;
         while(head) {
-            if(root->left and root->left->val == head->val and root->right and root->right->val == head->val) {
+            if(root->left and root->left->val == head->val and root->right and root->right->val == head->val)
                 return checkLL(head, root->left) or checkLL(head, root->right);
-            }
-            if(root->left and root->left->val == head->val)
+            else if(root->left and root->left->val == head->val)
                 root = root->left;
             else if(root->right and root->right->val == head->val)
                 root = root->right;
