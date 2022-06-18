@@ -1,27 +1,17 @@
 class Solution {
 public:
-    int help(vector<vector<int>> &a, int col) {
-        int m=a.size(), n=a[0].size();
-        for(int row=0 ; row<m and col>=0 and col<n ; ++row) {
-            if(a[row][col]==1) {
-                if(col+1>=n or a[row][col+1]==-1)
-                    return -1;
-                else
-                    col++;
-            }
-            else {
-                if(col-1<0 or a[row][col-1]==1)
-                    return -1;
-                else
-                    col--;
-            }
-        }
-        return (col==n ? -1 : col);
-    }
-    vector<int> findBall(vector<vector<int>>& grid) {
+    vector<int> findBall(vector<vector<int>>& a) {
         vector<int> v;
-        for(int col=0 ; col<grid[0].size() ; ++col) {
-            v.push_back(help(grid, col));
+        for(int i=0 ; i<a[0].size() ; ++i) {
+            int c=i, possible=1;
+            for(int r=0 ; r<a.size() ; ++r) {
+                if(c+a[r][c]<0 or c+a[r][c]>=a[0].size() or a[r][c]!=a[r][c+a[r][c]]) {
+                    possible = 0;
+                    break;
+                }
+                c += a[r][c];
+            }
+            v.push_back(possible and c>=0 and c<a[0].size() ? c : -1);
         }
         return v;
     }
