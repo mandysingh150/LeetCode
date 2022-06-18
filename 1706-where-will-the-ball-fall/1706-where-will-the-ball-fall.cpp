@@ -11,7 +11,7 @@ public:
                 }
                 c += a[r][c];
             }
-            v.push_back(possible and c>=0 and c<a[0].size() ? c : -1);
+            v.push_back(possible ? c : -1);
         }
         return v;
     }
