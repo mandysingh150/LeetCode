@@ -1,20 +1,22 @@
 class Solution {
 public:
     long long distinctNames(vector<string>& ideas) {
-        long long ans = 0;
-        vector<unordered_set<string>> v(26);
-        
-        for(auto &i: ideas) {
-            v[i[0]-'a'].insert(i.substr(1));
+        long long ans=0;
+        unordered_map<char,unordered_set<string>> mp;
+        for(auto i: ideas) {
+            mp[i[0]].insert(i.substr(1));
         }
-        
-        for(int i=0 ; i<25 ; ++i) {
-            for(int j=i+1 ; j<26 ; ++j) {
-                int count_same = 0;
-                for(auto &str: v[i]) {
-                    count_same += v[j].count(str);
+        for(char c1='a' ; c1<='z' ; ++c1) {
+            for(char c2='a' ; c2<='z' ; ++c2) {
+                if(c1 != c2) {
+                    int cnt_same=0;
+                    for(auto i: mp[c2]) {
+                        if(mp[c1].count(i)) {
+                            cnt_same++;
+                        }
+                    }
+                    ans += (mp[c1].size()-cnt_same) * (mp[c2].size()-cnt_same);
                 }
-                ans += (2 * (v[i].size() - count_same) * (v[j].size() - count_same));
             }
         }
         return ans;
