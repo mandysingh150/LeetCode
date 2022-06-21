@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int h(int i, vector<string> &a, vector<int> &val, int mp[]) {
+    int h(int i, vector<string> &a, int val[], int mp[]) {
         if(i == a.size()) {
             return 0;
         }
@@ -12,7 +12,7 @@ public:
         return max(_1, _2);
     }
     int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {
-        vector<int> val(words.size());
+        int val[14]={0};
         for(int i=0 ; i<words.size() ; ++i) {
             for(auto ch: words[i]) {
                 val[i] += score[ch-'a'];
