@@ -16,6 +16,8 @@ public:
                             }
                         }
                     }
+                    if(!found)
+                        break;
                 }
             }
             if(found)
