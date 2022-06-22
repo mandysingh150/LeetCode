@@ -3,14 +3,9 @@ public:
     int leastInterval(vector<char>& tasks, int n) {
         priority_queue<int> pq;
         int a[26]={0};
-        for(auto i: tasks) {
-            a[i-'A']++;
-        }
-        for(int i=0 ; i<26 ; ++i) {
-            if(a[i] > 0) {
-                pq.push(a[i]);
-            }
-        }
+        for(auto i: tasks) a[i-'A']++;
+        for(int i=0 ; i<26 ; ++i) if(a[i] > 0) pq.push(a[i]);
+
         int all_time=0;
         while(!pq.empty()) {
             vector<int> v;
@@ -22,11 +17,7 @@ public:
                     time++;
                 }
             }
-            for(auto i: v) {
-                if(--i > 0) {
-                    pq.push(i);
-                }
-            }
+            for(auto i: v) if(--i > 0) pq.push(i);
             all_time += !pq.empty() ? n+1 : time;
         }
         return all_time;
