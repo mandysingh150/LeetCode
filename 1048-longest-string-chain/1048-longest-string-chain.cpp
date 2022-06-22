@@ -1,20 +1,21 @@
 class Solution {
 public:
-    int longestStrChain(vector<string>& words) {
-        sort(words.begin(), words.end(), [&](string &a, string &b) {
-            return a.size()<b.size();
+    int longestStrChain(vector<string>& a) {
+        sort(begin(a), end(a), [](string &c, string &d) {
+            return c.size() < d.size();        
         });
         unordered_map<string,int> mp;
-        for(int i=0 ; i<words.size() ; ++i) {
-            mp[words[i]] = 1;
+        for(int i=0 ; i<a.size() ; ++i) {
+            mp[a[i]] = i;
         }
+        vector<int> v(a.size(), 1);
         int mx=1;
-        for(auto str: words) {
-            for(int i=0 ; i<str.size() ; ++i) {
-                string t = str.substr(0, i) + str.substr(i+1);
+        for(int i=0 ; i<a.size() ; ++i) {
+            for(int j=0 ; j<a[i].size() ; ++j) {
+                string t = a[i].substr(0,j) + a[i].substr(j+1);
                 if(mp.count(t)) {
-                    mp[str] = 1+mp[t];
-                    mx = max(mx, mp[str]);
+                    v[i] = max(v[i], 1+v[mp[t]]);
+                    mx = max(v[i], mx);
                 }
             }
         }
