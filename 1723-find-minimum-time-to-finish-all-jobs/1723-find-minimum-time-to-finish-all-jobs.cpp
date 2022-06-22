@@ -1,13 +1,13 @@
 class Solution {
 public:
-    int ans;
-    void dfs(vector<int> &jobs, int in, vector<int> &workers, int max_val) {
+    int ans, workers[12];
+    void dfs(vector<int> &jobs, int in, int k, int max_val) {
         if(in == jobs.size()) {
             ans = min(ans, max_val);
             return;
         }
         unordered_set<int> s;
-        for(int i=0 ; i<workers.size() ; ++i) {
+        for(int i=0 ; i<k ; ++i) {
             // branch cutting step
             if(s.count(workers[i]))
                 continue;
@@ -17,7 +17,7 @@ public:
             
             s.insert(workers[i]);
             workers[i] += jobs[in];
-            dfs(jobs, in+1, workers, max(workers[i], max_val));
+            dfs(jobs, in+1, k, max(workers[i], max_val));
             workers[i] -= jobs[in];
         }
     }
@@ -25,14 +25,14 @@ public:
         if(k == jobs.size())
             return *max_element(begin(jobs), end(jobs));
         
-        // sort(begin(jobs), end(jobs), greater<int>());
+        sort(begin(jobs), end(jobs), greater<int>());
+        memset(workers, 0, sizeof(workers));
         ans = 0;
         // setting max value of 'ans'
         for(auto i: jobs) {
             ans += i;
         }
-        vector<int> workers(k, 0);
-        dfs(jobs, 0, workers, 0);
+        dfs(jobs, 0, k, 0);
         return ans;
     }
 };
