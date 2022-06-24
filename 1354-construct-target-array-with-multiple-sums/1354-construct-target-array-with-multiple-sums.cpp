@@ -1,5 +1,3 @@
-#define large long long
-
 class Solution {
 public:
     bool isPossible(vector<int>& A) {
