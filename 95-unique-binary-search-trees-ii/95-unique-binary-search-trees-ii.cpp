@@ -19,8 +19,8 @@ public:
         
         vector<TreeNode*> ans;
         for(int i=start ; i<=end ; ++i)
-            for(auto j: generateTrees(i-1, start))
-                for(auto k: generateTrees(end, i+1))
+            for(auto &j: generateTrees(i-1, start))
+                for(auto &k: generateTrees(end, i+1))
                     ans.push_back(new TreeNode(i, j, k));
         return ans;
     }
