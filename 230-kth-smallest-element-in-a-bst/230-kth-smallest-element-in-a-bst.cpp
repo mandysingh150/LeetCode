@@ -16,8 +16,7 @@ public:
         if(!root)
             return;
         inorder(root->left, k);
-        k--;
-        if(k==0) {
+        if(--k==0) {
             ans=root->val;
             return;
         }
