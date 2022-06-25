@@ -1,28 +1,25 @@
 class WordFilter {
 public:
-    unordered_map<string,int> mp;
-    WordFilter(vector<string>& s) {
-        for(int i=0 ; i<s.size() ; ++i) {
-            string word = s[i];
-            int sz=word.size();
-            for(int j=0 ; j<sz ; ++j) {
-                string prefix = word.substr(0, j+1);
-                for(int k=0 ; k<sz ; ++k) {
-                    string suffix = word.substr(k, sz-k);
-                    mp[prefix + " " + suffix] = i;
+    unordered_map<string,vector<int>> mp;
+    WordFilter(vector<string>& words) {
+        for(int i=0 ; i<words.size() ; ++i) {
+            for(int j=1 ; j<=words[i].size() ; ++j) {
+                string pre = words[i].substr(0, j);
+                for(int k=1 ; k<=words[i].size() ; ++k) {
+                    mp[pre + " " + words[i].substr(words[i].size()-k)].push_back(i);
                 }
             }
         }
     }
     
-    int f(string p, string s) {
-        string t = p + " " + s;
-        return mp.count(t) ? mp[t] : -1;
+    int f(string pref, string suff) {
+        string s = pref + " " + suff;
+        return mp.count(s) ? mp[s].back() : -1;
     }
 };
 
 /**
  * Your WordFilter object will be instantiated and called as such:
  * WordFilter* obj = new WordFilter(words);
- * int param_1 = obj->f(prefix,suffix);
+ * int param_1 = obj->f(pref,suff);
  */
