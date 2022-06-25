@@ -1,12 +1,12 @@
 class WordFilter {
 public:
-    unordered_map<string,vector<int>> mp;
+    unordered_map<string,int> mp;
     WordFilter(vector<string>& words) {
         for(int i=0 ; i<words.size() ; ++i) {
             for(int j=1 ; j<=words[i].size() ; ++j) {
                 string pre = words[i].substr(0, j);
                 for(int k=1 ; k<=words[i].size() ; ++k) {
-                    mp[pre + " " + words[i].substr(words[i].size()-k)].push_back(i);
+                    mp[pre + " " + words[i].substr(words[i].size()-k)] = i;
                 }
             }
         }
@@ -14,7 +14,7 @@ public:
     
     int f(string pref, string suff) {
         string s = pref + " " + suff;
-        return mp.count(s) ? mp[s].back() : -1;
+        return mp.count(s) ? mp[s] : -1;
     }
 };
 
