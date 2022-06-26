@@ -1,41 +1,45 @@
-int dir[] = {-1,0,1,0,-1};
+int dir[]={-1,0,1,0,-1};
 class Solution {
 public:
-    int m,n;
-    void bfs(vector<vector<int>> &h, queue<pair<int,int>> &q, vector<vector<int>> &vis, vector<vector<int>> &ans) {
+    int dp[201][201];
+    void BFS(vector<vector<int>> &a, bool pacific) {
+        queue<pair<int,int>> q;
+        int row = (pacific ? 0 : a.size()-1);
+        int col = (pacific ? 0 : a[0].size()-1);
+        vector<vector<int>> vis(a.size(), vector<int>(a[0].size(), 0));
+        for(int i=0 ; i<a.size() ; ++i) {
+            for(int j=0 ; j<a[0].size() ; ++j) {
+                if(i==row or j==col) {
+                    q.push({i,j});
+                    vis[i][j]=1;
+                }
+            }
+        }
         while(!q.empty()) {
-            auto [row, col] = q.front();
+            auto [r, c] = q.front();
             q.pop();
-            for(int k=0 ; k<4 ; ++k) {
-                int x=row+dir[k], y=col+dir[k+1];
-                if(x>=0 and x<m and y>=0 and y<n and h[row][col]<=h[x][y] and !vis[x][y]) {
-                    q.push({x,y});
-                    ans[x][y]++;
+            dp[r][c]++;
+            for(int i=0 ; i<4 ; ++i) {
+                int x=r+dir[i], y=c+dir[i+1];
+                if(x>=0 and x<a.size() and y>=0 and y<a[0].size() and !vis[x][y] and a[x][y]>=a[r][c]) {
                     vis[x][y]=1;
+                    q.push({x,y});
                 }
             }
         }
     }
-    vector<vector<int>> pacificAtlantic(vector<vector<int>>& h) {
-        m=h.size(), n=h[0].size();
-        vector<vector<int>> vis(m, vector<int>(n, 0)), ans(m, vector<int>(n, 0)), v;
-        queue<pair<int,int>> q;
-        for(int i=0 ; i<m ; ++i)
-            for(int j=0 ; j<n ; ++j)
-                if(i==0 or j==0)
-                    q.push({i,j}), vis[i][j]=1, ans[i][j]++;
-        bfs(h, q, vis, ans);
-        for(int i=0 ; i<m ; ++i)
-            for(int j=0 ; j<n ; ++j) {
-                vis[i][j] = 0;
-                if(i==m-1 or j==n-1)
-                    q.push({i,j}), vis[i][j]=1, ans[i][j]++;
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& a) {
+        memset(dp, 0, sizeof(dp));
+        BFS(a, 1);
+        BFS(a, 0);
+        vector<vector<int>> ans;
+        for(int i=0 ; i<a.size() ; ++i) {
+            for(int j=0 ; j<a[0].size() ; ++j) {
+                if(dp[i][j] == 2) {
+                    ans.push_back({i,j});
+                }
             }
-        bfs(h, q, vis, ans);
-        for(int i=0 ; i<m ; ++i)
-            for(int j=0 ; j<n ; ++j)
-                if(ans[i][j]==2)
-                    v.push_back({i,j});
-        return v;
+        }
+        return ans;
     }
 };
