@@ -3,7 +3,9 @@ public:
     int kadane(vector<int> &a, vector<int> &b) {
         int sum=0, mx=0;
         for(int i=0 ; i<a.size() ; ++i) {
-            sum = max(b[i]-a[i], sum+(b[i]-a[i]));
+            sum += b[i]-a[i];
+            if(sum < 0)
+                sum=0;
             mx = max(mx, sum);
         }
         return mx;
