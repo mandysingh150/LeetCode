@@ -2,6 +2,7 @@ class Solution {
 public:
     int coinChange(vector<int>& a, int x) {
         int n=a.size();
+        sort(begin(a), end(a));
         vector<vector<int>> dp(n+1, vector<int>(x+1));
         for(int i=0 ; i<=n ; ++i) {
             for(int j=0 ; j<=x ; ++j) {
