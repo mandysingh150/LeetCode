@@ -1,20 +1,29 @@
-#define max INT_MAX-10000
 class Solution {
 public:
-    vector<vector<int>> dp;
-    int h(vector<int> &coins, int in, int x) {
-        if(x == 0)
-            return 0;
-        if(in == coins.size() or x < 0)
-            return max;
-        if(dp[in][x] != -1)
-            return dp[in][x];
-        return dp[in][x] = min(h(coins, in+1, x), 1+h(coins, in, x-coins[in]));
-    }
-    int coinChange(vector<int>& coins, int amount) {
-        dp = vector<vector<int>>(coins.size(), vector<int>(amount+1, -1));
-        sort(begin(coins), end(coins));
-        int ans = h(coins, 0, amount);
-        return ans>=max ? -1 : ans;
+    int coinChange(vector<int>& a, int x) {
+        int n=a.size();
+        vector<vector<int>> dp(n+1, vector<int>(x+1));
+        for(int i=0 ; i<=n ; ++i) {
+            for(int j=0 ; j<=x ; ++j) {
+                if(i==0 and j==0) {
+                    dp[i][j] = 0;
+                }
+                else if(i==0) {
+                    dp[i][j]=INT_MAX-1;
+                }
+                else if(j==0) {
+                    dp[i][j]=0;
+                }
+                else {
+                    if(j >= a[i-1]) {
+                        dp[i][j] = min(dp[i-1][j], 1+dp[i][j-a[i-1]]);
+                    }
+                    else {
+                        dp[i][j] = dp[i-1][j];
+                    }
+                }
+            }
+        }
+        return dp[n][x]==INT_MAX-1 ? -1 : dp[n][x];
     }
 };
