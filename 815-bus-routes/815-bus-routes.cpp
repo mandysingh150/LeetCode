@@ -10,7 +10,7 @@ public:
                 s[i].insert(e);
             }
         }
-        bool vis[1000000]={0};
+        bool vis[1000000]={0}, route_vis[501]={0};
         queue<int> q;
         q.push(source);
         vis[source]=1;
@@ -22,7 +22,8 @@ public:
                 q.pop();
                 
                 for(int i=0 ; i<routes.size() ; ++i) {
-                    if(s[i].count(top)) {
+                    if(!route_vis[i] and s[i].count(top)) {
+                        route_vis[i] = 1;
                         for(auto ng: s[i]) {
                             if(ng == target)
                                 return len+1;
@@ -31,7 +32,6 @@ public:
                                 q.push(ng);
                             }
                         }
-                        s[i].clear();
                     }
                 }
             }
