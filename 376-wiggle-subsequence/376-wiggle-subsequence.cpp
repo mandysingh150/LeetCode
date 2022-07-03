@@ -1,13 +1,28 @@
 class Solution {
 public:
-    int wiggleMaxLength(vector<int>& nums) {
-        int inc=1, dec=1;
-        for(int i=1 ; i<nums.size() ; ++i) {
-            if(nums[i-1] < nums[i])
-                inc = dec+1;
-            else if(nums[i-1] > nums[i])
-                dec = inc+1;
+    int dp[1001][1010][2];
+    int h(vector<int> &a, int in, int prev, bool inc) {
+        if(in == a.size()) {
+            return 0;
         }
-        return max(inc, dec);
+        if(dp[in][prev+2][inc] != -1) {
+            return dp[in][prev+2][inc];
+        }
+        int a1 = h(a, in+1, prev, inc), a2=0;
+        if(inc) {
+            if(prev < a[in]) {
+                a2 = 1 + h(a, in+1, a[in], !inc);
+            }
+        }
+        else {
+            if(prev > a[in]) {
+                a2 = 1 + h(a, in+1, a[in], !inc);
+            }
+        }
+        return dp[in][prev+2][inc] = max(a1, a2);
+    }
+    int wiggleMaxLength(vector<int>& a) {
+        memset(dp, -1, sizeof(dp));
+        return max(h(a, 0, -1, 1), h(a, 0, 1001, 0));
     }
 };
