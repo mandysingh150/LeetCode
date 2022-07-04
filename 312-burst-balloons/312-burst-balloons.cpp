@@ -5,9 +5,6 @@ public:
         if(si > ei) {
             return 0;
         }
-        if(si == ei) {
-            return (si-1<0 ? 1 : a[si-1]) * a[si] * (ei+1==a.size() ? 1 : a[ei+1]);
-        }
         if(dp[si][ei] != -1)
             return dp[si][ei];
         int mx=0;
