@@ -1,38 +1,27 @@
 class Solution {
 public:
-    int ans, workers[12];
-    void dfs(vector<int> &jobs, int in, int k, int max_val) {
-        if(in == jobs.size()) {
-            ans = min(ans, max_val);
-            return;
-        }
-        unordered_set<int> s;
-        for(int i=0 ; i<k ; ++i) {
-            // branch cutting step
-            if(s.count(workers[i]))
+    int worker[12] = {}, res = 0;
+    int dfs(vector<int>& jobs, int i, int k, int cur) {
+        if (cur >= res)
+            return res;
+        if (i == jobs.size())
+            return res = cur;
+        unordered_set<int> workTime;
+        for (auto j = 0; j < k; ++j) {
+            if (!workTime.insert(worker[j]).second)
                 continue;
-            // another branch cutting step
-            if(workers[i] + jobs[in] >= ans)
-                continue;
-            
-            s.insert(workers[i]);
-            workers[i] += jobs[in];
-            dfs(jobs, in+1, k, max(workers[i], max_val));
-            workers[i] -= jobs[in];
+            worker[j] += jobs[i];
+            dfs(jobs, i + 1, k, max(cur, worker[j]));
+            worker[j] -= jobs[i];
         }
+        return res;
     }
     int minimumTimeRequired(vector<int>& jobs, int k) {
-        if(k == jobs.size())
+        if (k == jobs.size())
             return *max_element(begin(jobs), end(jobs));
-        
         sort(begin(jobs), end(jobs), greater<int>());
-        memset(workers, 0, sizeof(workers));
-        ans = 0;
-        // setting max value of 'ans'
-        for(auto i: jobs) {
-            ans += i;
-        }
-        dfs(jobs, 0, k, 0);
-        return ans;
+        for (int i = 0; i < jobs.size(); i += k)
+            res += jobs[i];
+        return dfs(jobs, 0, k, 0);
     }
 };
