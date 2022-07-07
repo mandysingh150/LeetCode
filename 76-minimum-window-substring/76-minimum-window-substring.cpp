@@ -1,24 +1,24 @@
 class Solution {
 public:
     string minWindow(string &s, string &t) {
-        int si=0, ei=0;
+        // {start_index, length}
         pair<int,int> ans={-1,INT_MAX};
-        unordered_set<char> st;
-        int a[256]={0};
+        int si=0, ei=0, cnt=0;
+        unordered_set<int> mp;
+        int f[256]={0};
         for(auto i: t) {
-            a[i]++;
-            st.insert(i);
+            mp.insert(i);
+            f[i]++;
         }
-        int cnt=0;
-        while(ei < s.size()) {
-            if(st.count(s[ei])) {
-                if(--a[s[ei]] == 0)
+        while(ei<s.size()) {
+            if(mp.count(s[ei])) {
+                if(--f[s[ei]] == 0) {
                     cnt++;
-                while(cnt == st.size()) {
-                    if(ei-si+1 < ans.second) {
+                }
+                while(cnt == mp.size()) {
+                    if(ei-si+1 < ans.second)
                         ans = {si, ei-si+1};
-                    }
-                    if(st.count(s[si]) and ++a[s[si]] > 0)
+                    if(mp.count(s[si]) and ++f[s[si]] == 1) 
                         cnt--;
                     si++;
                 }
