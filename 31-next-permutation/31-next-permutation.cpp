@@ -1,18 +1,17 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& a) {
-        int i=a.size()-1, j=i;
-        
-        while(i>=1 and a[i-1]>=a[i]) 
-            i--;
-        
-        if(i==0)
+        int in=a.size()-2, j=in+1;
+        while(in>=0 and a[in] >= a[in+1])
+            in--;
+        if(in<0) {
             sort(begin(a), end(a));
+        }
         else {
-            while(a[i-1] >= a[j]) 
+            while(j>=0 and a[in] >= a[j])
                 j--;
-            swap(a[i-1], a[j]);
-            reverse(begin(a)+i, end(a));
+            swap(a[in], a[j]);
+            reverse(a.begin()+in+1, a.end());
         }
     }
 };
