@@ -11,12 +11,22 @@ public:
                     if(sum == x) {
                         v.insert({a[i], a[j], a[k], a[l]});
                         k++;
+                        while(k<l and a[k-1]==a[k]) 
+                            ++k;
                         l--;
+                        while(k<l and a[l]==a[l+1]) 
+                            --l;
                     }
-                    else if(sum < x)
+                    else if(sum < x) {
                         k++;
-                    else
-                        l--;
+                        while(k<a.size() and a[k-1]==a[k]) 
+                            ++k;
+                    }                        
+                    else {
+                        --l;
+                        while(k<l and a[l]==a[l+1]) 
+                            --l;
+                    }
                 }
             }
         }
