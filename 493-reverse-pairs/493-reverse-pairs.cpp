@@ -3,10 +3,16 @@ class Solution {
 public:
     int merge(vector<int> &a, int si, int mid, int ei) {
         int i=si, j=mid+1, k=0, cnt=0;
-        auto it = begin(a)+mid;
-        for(int temp=mid+1 ; temp<=ei ; ++temp) {
-            cnt += it - upper_bound(begin(a)+si, begin(a)+mid+1, 2ll*a[temp]) + 1;
+        while(i<=mid and j<=ei) {
+            if(a[i] > 2ll*a[j]) {
+                cnt += mid-i+1;
+                j++;
+            }
+            else {
+                i++;
+            }
         }
+        i=si, j=mid+1;
         while(i<=mid and j<=ei) {
             if(a[i] <= a[j]) b[k]=a[i++];
             else b[k]=a[j++];
