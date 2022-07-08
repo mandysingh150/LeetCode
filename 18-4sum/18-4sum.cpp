@@ -1,15 +1,15 @@
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& a, int x) {
-        set<vector<int>> v;
+        vector<vector<int>> v;
         sort(begin(a), end(a));
-        for(int i=0 ; i<a.size() ; ++i) {
-            for(int j=i+1 ; j<a.size() ; ++j) {
+        for(int i=0 ; i<a.size() ; ) {
+            for(int j=i+1 ; j<a.size() ; ) {
                 int k=j+1, l=a.size()-1;
                 while(k<l) {
                     long long sum = 0ll+a[i]+a[j]+a[k]+a[l];
                     if(sum == x) {
-                        v.insert({a[i], a[j], a[k], a[l]});
+                        v.push_back({a[i], a[j], a[k], a[l]});
                         k++;
                         while(k<l and a[k-1]==a[k]) 
                             ++k;
@@ -28,8 +28,14 @@ public:
                             --l;
                     }
                 }
+                ++j;
+                while(j<a.size() and a[j-1]==a[j])
+                    ++j;
             }
+            ++i;
+            while(i<a.size() and a[i-1]==a[i])
+                ++i;
         }
-        return vector<vector<int>>(begin(v), end(v));
+        return v;
     }
 };
