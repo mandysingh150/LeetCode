@@ -9,13 +9,8 @@ public:
             if(i>k)
                 s.erase(s.find(dp[i-k-1]));
             dp[i] = *s.begin() + nums[i];
-            // for(auto ele: s) {
-            //     cout<<ele<<" ";
-            // }
-            // cout<<"\n";
             s.insert(dp[i]);
         }
-        // cout<<"************\n";
         return dp.back();
     }
 };
