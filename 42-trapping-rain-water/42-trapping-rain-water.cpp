@@ -2,18 +2,26 @@ class Solution {
 public:
     int trap(vector<int>& a) {
         int n=a.size();
-        vector<int> lr(n), rl(n);
-        lr[0]=a[0];
-        rl[n-1]=a[n-1];
-        for(int i=1 ; i<n ; ++i) {
-            lr[i] = max(lr[i-1], a[i]);
-        }
-        for(int i=n-2 ; i>=0 ; --i) {
-            rl[i] = max(rl[i+1], a[i]);
-        }
-        int ans=0;
-        for(int i=0 ; i<n ; ++i) {
-            ans += min(lr[i], rl[i]) - a[i];
+        int left_max=0, right_max=0, left=0, right=n-1, ans=0;
+        while(left <= right) {
+            if(a[left] <= a[right]) {
+                if(a[left] > left_max) {
+                    left_max = a[left];
+                }
+                else {
+                    ans += left_max-a[left];
+                }
+                left++;
+            }
+            else {
+                if(a[right] > right_max) {
+                    right_max = a[right];
+                }
+                else {
+                    ans += right_max-a[right];
+                }
+                right--;
+            }
         }
         return ans;
     }
