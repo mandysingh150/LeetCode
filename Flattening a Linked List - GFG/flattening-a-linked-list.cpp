@@ -110,7 +110,7 @@ struct Node{
 
 /*  Function which returns the  root of 
     the flattened linked list. */
-Node* merge_LL(Node *a, Node *b) {
+Node *merge(Node *a, Node *b) {
     if(!a) return b;
     if(!b) return a;
     
@@ -139,24 +139,13 @@ Node* merge_LL(Node *a, Node *b) {
     if(!b) tail->bottom = a;
     return head;
 }
-Node *flatten(Node *root) {
+Node *flatten(Node *root)
+{
     if(root) {
-        // if(root->next) {
-        //     if(root->data > root->next->data) {
-        //         Node *nxt = root->next->next;
-        //         root->next->next = root;
-        //         root->next = nxt;
-        //         // nxt = root->bottom;
-        //         // root->bottom = root->next->bottom;
-        //         // root->next->bottom = nxt;
-        //     }
-        // }
-        // Node *ans;
-        Node *bottom_node = flatten(root->bottom);
-        Node *next_node = flatten(root->next);
+        Node *nxt = root->next;
         root->next = nullptr;
-        root = merge_LL(root, next_node);
+        return merge(root, flatten(nxt));
     }
-    return root;
+    return nullptr;
 }
 
