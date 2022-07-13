@@ -2,24 +2,18 @@ class Solution {
 public:
     vector<vector<int>> ans;
     void h(vector<int> &a, int in, int x, vector<int> &t) {
-        if(x <= 0) {
+        if(in == a.size()) {
             if(x == 0) {
                 ans.push_back(t);
             }
             return;
         }
-        if(in == a.size()) {
-            return;
-        }
-        int i=0;
-        while(i*a[in]<=x) {
-            h(a, in+1, x-a[in]*i, t);
+        if(a[in] <= x) {
             t.push_back(a[in]);
-            i++;
-        }
-        while(i--) {
+            h(a, in, x-a[in], t);
             t.pop_back();
         }
+        h(a, in+1, x, t);
     }
     vector<vector<int>> combinationSum(vector<int>& a, int x) {
         vector<int> t;
