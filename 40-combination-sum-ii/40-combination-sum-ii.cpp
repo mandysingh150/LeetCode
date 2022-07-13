@@ -4,9 +4,9 @@ public:
     void h(vector<int> &a, int in, int x, vector<int> &t) {
         if(x == 0) {
             v.push_back(t);
+            return;
         }
         if(in == a.size()) {
-            
             return;
         }
         for(int i=in ; i<a.size() and a[i]<=x ; ++i) {
