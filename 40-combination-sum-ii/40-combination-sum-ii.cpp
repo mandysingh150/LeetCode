@@ -6,9 +6,6 @@ public:
             v.push_back(t);
             return;
         }
-        if(in == a.size()) {
-            return;
-        }
         for(int i=in ; i<a.size() and a[i]<=x ; ++i) {
             if(i==in or a[i]!=a[i-1]) {
                 t.push_back(a[i]);
