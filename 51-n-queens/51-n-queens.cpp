@@ -22,7 +22,6 @@ public:
         }
     }
     vector<vector<string>> solveNQueens(int n) {
-        v.clear();
         vector<string> a(n, string(n, '.'));
         h(n, 0, a);
         return v;
