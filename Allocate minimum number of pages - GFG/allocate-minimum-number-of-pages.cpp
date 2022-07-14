@@ -31,6 +31,8 @@ class Solution
         for(int i=0 ; i<N ; ++i) {
             h+=A[i];
         }
+        if(M>N)
+            return 0;
         while(l<=h) {
             long long mid = (l+h)>>1;
             if(check(A, N, M, mid)) {
