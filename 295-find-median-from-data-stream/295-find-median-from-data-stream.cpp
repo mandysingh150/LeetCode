@@ -2,10 +2,7 @@ class MedianFinder {
 public:
     priority_queue<int> mx;
     priority_queue<int, vector<int>, greater<int>> mn;
-    MedianFinder() {
-        while(!mx.empty()) mx.pop();
-        while(!mn.empty()) mn.pop();
-    }
+    MedianFinder() {}
     
     void addNum(int num) {
         if(mx.empty() or num <= mx.top()) {
