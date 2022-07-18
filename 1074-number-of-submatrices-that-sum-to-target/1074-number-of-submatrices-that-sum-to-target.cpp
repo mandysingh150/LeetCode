@@ -10,14 +10,12 @@ public:
         int ans=0;
         for(int r1=1 ; r1<=m ; ++r1) {
             for(int r2=r1 ; r2<=m ; ++r2) {
-                map<int,int> mp;
-                mp[0]++;
-                for(int c=1 ; c<=n ; ++c) {
-                    int sum = prefix_sum_2d[r2][c] - prefix_sum_2d[r1-1][c];
-                    if(mp.count(sum - x)) {
-                        ans += mp[sum - x];
+                for(int c1=1 ; c1<=n ; ++c1) {
+                    for(int c2=c1 ; c2<=n ; ++c2) {
+                        if(prefix_sum_2d[r2][c2] - prefix_sum_2d[r1-1][c2] - prefix_sum_2d[r2][c1-1] + prefix_sum_2d[r1-1][c1-1] == x) {
+                            ans++;
+                        }
                     }
-                    mp[sum]++;
                 }
             }
         }
