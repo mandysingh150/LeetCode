@@ -10,7 +10,7 @@ public:
         int ans=0;
         for(int r1=1 ; r1<=m ; ++r1) {
             for(int r2=r1 ; r2<=m ; ++r2) {
-                unordered_map<int,int> mp;
+                map<int,int> mp;
                 mp[0]++;
                 for(int c=1 ; c<=n ; ++c) {
                     int sum = prefix_sum_2d[r2][c] - prefix_sum_2d[r1-1][c];
