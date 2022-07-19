@@ -1,28 +1,27 @@
 class Solution {
 public:
-    bool help(vector<int> &a, int in, vector<int> &v, int sum) {
+    bool help(vector<int> &a, int in, int cnt[]) {
         if(in == a.size()) {
-            return v[0]+v[1]-v[2]-v[3]==0;
+            return cnt[0]==0 and cnt[1]==0 and cnt[2]==0 and cnt[3]==0;
+            //+cnt[1]-cnt[2]-cnt[3] == 0;
         }
         for(int i=0 ; i<4 ; ++i) {
-            if(v[i]+a[in] <= sum) {
-                v[i] += a[in];
-                if(help(a, in+1, v, sum)) {
+            if(cnt[i]-a[in] >= 0) {
+                cnt[i] -= a[in];
+                if(help(a, in+1, cnt)) {
                     return 1;
                 }
-                v[i] -= a[in];
+                cnt[i] += a[in];
             }
         }
         return 0;
     }
     bool makesquare(vector<int>& a) {
-        int n=a.size(), sum_req=accumulate(begin(a), end(a), 0), mx=*max_element(begin(a), end(a));
-        if(sum_req%4 or mx>(sum_req/4)) {
-            return 0;
-        }
-        sum_req/=4;
-        vector<int> sums(4, 0);
+        int sum=accumulate(begin(a), end(a), 0ll);
+        if(sum%4 or *max_element(begin(a), end(a))>sum/4) return 0;
+        sum /= 4;
+        int cnt[4]={sum, sum, sum, sum};
         sort(begin(a), end(a), greater<int>());
-        return help(a, 0, sums, sum_req);
+        return help(a, 0, cnt);
     }
 };
