@@ -1,23 +1,17 @@
 class Solution {
 public:
-    bool isFound(string &s, string &sub, int offset, int offSub) {
-        if(offSub == sub.size())
-            return 1;
-        if(offset >= s.size())
-            return 0;
-        
-        offset = s.find(sub[offSub], offset);
-        if(offset == string::npos)
-            return 0;
-        
-        return isFound(s, sub, offset+1, offSub+1);
-    }
-    
-    int numMatchingSubseq(string &s, vector<string>& words) {
-        int cnt = 0;
-        for(auto i: words)
-            if(isFound(s, i, 0, 0))
-                cnt++;
-        return cnt;
+    int numMatchingSubseq(string &s, vector<string>& w) {
+        vector<pair<int,int>> a[128];
+        for(int i=0 ; i<w.size() ; ++i) {
+            a[w[i][0]].push_back({i, 0});
+        }
+        for(int i=0 ; i<s.size() ; ++i) {
+            auto processing = a[s[i]];
+            a[s[i]].clear();
+            for(auto [word_index, char_index]: processing) {
+                a[w[word_index][char_index+1]].push_back({word_index, char_index+1});
+            }
+        }
+        return a[0].size();
     }
 };
