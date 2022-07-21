@@ -12,6 +12,7 @@ public:
                 a[w[word_index][char_index+1]].push_back({word_index, char_index+1});
             }
         }
+        // as strings are terminated by null character, our answer will be the number of strings in which we have reached the NULL character
         return a[0].size();
     }
 };
