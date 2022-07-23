@@ -11,30 +11,30 @@
  */
 class Solution {
 public:
-    vector<int> width;
-    int mx;
-    void h(TreeNode *root, int depth) {
-        if(!root) {
-            for(int i=depth ; i<width.size() ; ++i) {
-                if((i-depth)<32 and width[i] + ((1ll)<<(i-depth)) < INT_MAX) {
-                    width[i] += ((1ll)<<(i-depth));
+    // for explanation, go here: "https://www.youtube.com/watch?v=ZbybYvcVLks"
+    int widthOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        // {node, node_number_on_current_level}
+        queue<pair<TreeNode*,int>> q;
+        // 0 based indexing
+        q.push({root, 0});
+        int mx=1;
+        while(!q.empty()) {
+            int mn = q.front().second;
+            int sz=q.size();
+            while(sz--) {
+                auto [node, n] = q.front();
+                q.pop();
+                
+                mx = max(mx, n-mn+1);
+                if(node->left) {
+                    q.push({node->left, 1ll*(n-mn)*2+1});
+                }
+                if(node->right) {
+                    q.push({node->right, 1ll*(n-mn)*2+2});
                 }
             }
-            return;
         }
-        if(depth == width.size()) {
-            width.push_back(1);
-        }
-        else {
-            width[depth]++;
-        }
-        mx = max(mx, width[depth]);
-        h(root->left, depth+1);
-        h(root->right, depth+1);
-    }
-    int widthOfBinaryTree(TreeNode* root) {
-        mx=0;
-        h(root, 0);
         return mx;
     }
 };
