@@ -11,8 +11,8 @@
  */
 class Solution {
 public:
-    vector<long long> width;
-    long long mx;
+    vector<int> width;
+    int mx;
     void h(TreeNode *root, int depth) {
         if(!root) {
             for(int i=depth ; i<width.size() ; ++i) {
