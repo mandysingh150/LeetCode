@@ -1,19 +1,4 @@
-class Solution {
-public:
-    int mx;
-    void dfs(int node, vector<int> &e, vector<int> &a, vector<int> &vis, int len) {
-        if(!vis[node]) {
-            vis[node] = 1;
-            a[node] = len;
-            if(e[node] != -1) {
-                dfs(e[node], e, a, vis, len+1);
-            }
-            a[node] = -1;
-        }
-        else {
-            if(a[node] != -1) {
-                mx = max(len-a[node], mx);
-            }class Solution
+class Solution
 {
 public:
     int mx;
@@ -46,19 +31,6 @@ public:
         for (int i = 0; i < edges.size(); ++i) {
             if (!visited[i]) {
                 dfs(i, edges, length, visited, 0);
-            }
-        }
-        return mx;
-    }
-};
-        }
-    }
-    int longestCycle(vector<int>& e) {
-        mx=-1;
-        vector<int> vis(e.size(), 0), len(e.size(), -1);
-        for(int i=0 ; i<e.size() ; ++i) {
-            if(!vis[i]) {
-                dfs(i, e, len, vis, 0);
             }
         }
         return mx;
