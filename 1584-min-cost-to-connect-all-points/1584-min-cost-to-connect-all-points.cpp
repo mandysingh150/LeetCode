@@ -1,21 +1,39 @@
 class Solution {
 public:
-    int minCostConnectPoints(vector<vector<int>>& ps) {
-        int n = ps.size(), res = 0, i = 0, connected = 0;
-        vector<bool> visited(n);
-        // priority_queue is defined outside the "while" loop because we need to keep track of the all the possible edges originating from previously selected nodes and then select a minimum one everytime
-        priority_queue<pair<int, int>> pq;
-        while (++connected < n) {
-            visited[i] = true;
-            for (int j = 0; j < n; ++j)
-                if (!visited[j])
-                    pq.push({-(abs(ps[i][0] - ps[j][0]) + abs(ps[i][1] - ps[j][1])), j});
-            while (visited[pq.top().second])
-                pq.pop();
-            res -= pq.top().first;
-            i = pq.top().second;
-            pq.pop();
+    int find(vector<int> &p, int node) {
+        return p[node] < 0 ? node : p[node] = find(p, p[node]);
+    }
+    int minCostConnectPoints(vector<vector<int>>& a) {
+        // implementing Kruskal's algorithm
+        int n=a.size(), ans=0;
+        // if dsu[i]==-ve, then abs(dsu[i]) gives the tree size of node 'i'
+        vector<int> dsu(n, -1);
+        vector<array<int,3>> v;
+        for(int i=0 ; i<n ; ++i) {
+            for(int j=i+1 ; j<n ; ++j) {
+                v.push_back({abs(a[i][0]-a[j][0]) + abs(a[i][1]-a[j][1]), i, j});
+            }
         }
-        return res;
+        make_heap(begin(v), end(v), greater<array<int,3>>());
+        while(!v.empty()) {
+            pop_heap(begin(v), end(v), greater<array<int,3>>());
+            auto [distance, n1, n2] = v.back();
+            v.pop_back();
+            n1 = find(dsu, n1), n2 = find(dsu, n2);
+            if(n1 != n2) {
+                // take union
+                ans += distance;
+                
+                // abs(dsu[n1]) nodes will be added to the tree with parent 'n2'
+                dsu[n2] += dsu[n1];
+                // changing parent of tree 'n1' to 'n2'
+                dsu[n1] = n2;
+                
+                if(dsu[n2] == -n) {
+                    break;
+                }
+            }
+        }
+        return ans;
     }
 };
