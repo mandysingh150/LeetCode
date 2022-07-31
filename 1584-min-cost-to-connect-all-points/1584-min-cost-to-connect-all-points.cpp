@@ -3,6 +3,7 @@ public:
     int minCostConnectPoints(vector<vector<int>>& ps) {
         int n = ps.size(), res = 0, i = 0, connected = 0;
         vector<bool> visited(n);
+        // priority_queue is defined outside the "while" loop because we need to keep track of the all the possible edges originating from previously selected nodes and then select a minimum one everytime
         priority_queue<pair<int, int>> pq;
         while (++connected < n) {
             visited[i] = true;
