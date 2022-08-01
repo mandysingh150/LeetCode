@@ -1,14 +1,12 @@
 class Solution {
 public:
     int uniquePaths(int m, int n) {
-        long long N = m+n-2, R=m-1, ans=1;
-        for(int i=1 ; i<=R ; ++i) {
-            ans *= (N-R+i);
-            ans /= i;
+        int dp[101]={1};
+        for(int i=0 ; i<m ; ++i) {
+            for(int j=1 ; j<n ; ++j) {
+                dp[j] += dp[j-1];
+            }
         }
-        // for(int i=1 ; i<=R ; ++i) {
-        //     ans /= i;
-        // }
-        return ans;
+        return dp[n-1];
     }
 };
