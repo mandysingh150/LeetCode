@@ -7,14 +7,11 @@
 #     salaries as s
 # ) as t
 # where t.name is null or t.salary is null;
-select employee_id
-from employees
-where employee_id not in (select employee_id from salaries)
-
-union
-
-select employee_id
-from salaries
-where employee_id not in (select employee_id from employees)
-
-order by employee_id;
+select t.employee_id
+from (
+    select * from employees e left join salaries s using(employee_id)
+    union
+    select * from employees e right join salaries s using(employee_id)
+) as t
+where t.name is null or t.salary is null
+order by t.employee_id;
