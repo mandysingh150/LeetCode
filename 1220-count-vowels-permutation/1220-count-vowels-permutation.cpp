@@ -3,15 +3,19 @@ class Solution {
 public:
     int countVowelPermutation(int n) {
         // 0=a, 1=e, 2=i, 3=o, 4=u
-        vector<vector<int>> dp(20005, vector<int>(5, 1));
-        vector<vector<int>> mp{{1}, {0, 2}, {0, 1, 3, 4}, {2, 4}, {0}};
+        int dp[2][5];
+        for(int i=0 ; i<2 ; ++i) {
+            for(int j=0 ; j<5 ; ++j) {
+                dp[i][j] = 1;
+            }
+        }
+        int mp[6][6] = {{1, 1}, {2, 0, 2}, {4, 0, 1, 3, 4}, {2, 2, 4}, {1, 0}};
         
         for(int i=n-2 ; i>=0 ; --i) {
             for(int j=0 ; j<5 ; ++j) {
-                dp[i][j] = 0;
-                for(auto in: mp[j]) {
-                    // dp[i][j] = (1ll * dp[i][j] * dp[i+1][in])%mod;
-                    dp[i][j] = (0ll + dp[i][j] + dp[i+1][in])%mod;
+                dp[i%2][j] = 0;
+                for(int in=1 ; in<=mp[j][0] ; ++in) {
+                    dp[i%2][j] = (0ll + dp[i%2][j] + dp[(i+1)%2][mp[j][in]])%mod;
                 }
             }
         }
