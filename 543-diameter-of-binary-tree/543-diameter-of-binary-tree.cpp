@@ -18,7 +18,6 @@ public:
         return pair<int,int>{1+max(lht, rht), max(1+lht+rht, max(ld, rd))};
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        if(!root or (!root->left and !root->right)) return 0;
         return h(root).second-1;
     }
 };
