@@ -10,15 +10,28 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        vector<int> v;
-        while(head) {
-            v.push_back(head->val);
-            head=head->next;
+    ListNode* rev(ListNode *h) {
+        if(!h->next) return h;
+        auto t = rev(h->next);
+        h->next->next=h;
+        return t;
+    }
+    bool isPalindrome(ListNode* root) {
+        if(!root or !root->next) return 1;
+        auto slow=root;
+        auto fast=root->next;
+        while(fast->next and fast->next->next) {
+            slow=slow->next;
+            fast=fast->next->next;
         }
-        for(int i=0,j=v.size()-1 ; i<j ; ++i,--j)
-            if(v[i]!=v[j])
-                return 0;
+        auto nxt = slow->next;
+        slow->next=nullptr;
+        nxt = rev(nxt);
+        while(root and nxt) {
+            if(root->val != nxt->val) return 0;
+            root=root->next;
+            nxt=nxt->next;
+        }
         return 1;
     }
 };
