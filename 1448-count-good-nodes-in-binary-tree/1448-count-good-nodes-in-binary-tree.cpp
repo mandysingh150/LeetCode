@@ -15,8 +15,9 @@ public:
     void help(TreeNode *root, int mx) {
         if(!root) return;
         if(root->val >= mx) ans++;
-        help(root->left, max(root->val, mx));
-        help(root->right, max(root->val, mx));
+        mx = max(root->val, mx);
+        help(root->left, mx);
+        help(root->right, mx);
     }
     int goodNodes(TreeNode* root) {
         ans=0;
