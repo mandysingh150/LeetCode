@@ -11,25 +11,30 @@
  */
 class Solution {
 public:
-    int a[10], cnt=0;
-    void h(TreeNode *root) {
+    // int a[10], 
+    int cnt=0;
+    void h(TreeNode *root, int &val) {
         if(!root) return;
-        a[root->val]++;
+        // a[root->val]++;
+        val ^= (1<<(root->val));
         if(!root->left and !root->right) {
-            int odd_cnt=0;
-            for(int i=0 ; i<10 ; ++i) odd_cnt += (a[i]&1);
-            if(odd_cnt<=1) cnt++;
+            cnt += (val==0 or (val&(val-1)) == 0);
+            // int odd_cnt=0;
+            // for(int i=0 ; i<10 ; ++i) odd_cnt += (a[i]&1);
+            // if(odd_cnt<=1) cnt++;
         }
         else {
-            h(root->left);
-            h(root->right);
+            h(root->left, val);
+            h(root->right, val);
         }
-        a[root->val]--;
+        // a[root->val]--;
+        val ^= (1<<(root->val));
     }
     int pseudoPalindromicPaths (TreeNode* root) {
-        memset(a, 0, sizeof(a));
+        // memset(a, 0, sizeof(a));
         cnt=0;
-        h(root);
+        int val=0;
+        h(root, val);
         return cnt;
     }
 };
