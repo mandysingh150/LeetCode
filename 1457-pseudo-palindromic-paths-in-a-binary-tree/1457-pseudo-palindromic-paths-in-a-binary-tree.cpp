@@ -11,18 +11,10 @@
  */
 class Solution {
 public:
-    int cnt=0;
-    void h(TreeNode *root, int &val) {
-        if(!root) return;
+    int pseudoPalindromicPaths(TreeNode* root, int val=0) {
+        if(!root) return 0;
         val ^= (1<<(root->val));
-        if(!root->left and !root->right) cnt += (val==0 or (val&(val-1)) == 0);
-        else h(root->left, val), h(root->right, val);
-        val ^= (1<<(root->val));
-    }
-    int pseudoPalindromicPaths (TreeNode* root) {
-        cnt=0;
-        int val=0;
-        h(root, val);
-        return cnt;
+        if(!root->left and !root->right) return (val==0 or (val&(val-1)) == 0);
+        else return pseudoPalindromicPaths(root->left, val) + pseudoPalindromicPaths(root->right, val);
     }
 };
