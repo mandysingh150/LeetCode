@@ -8,7 +8,7 @@ public:
         return dp[in][si] = max(a[si]*b[in] + h(a, b, in+1, si+1, ei), a[ei]*b[in] + h(a, b, in+1, si, ei-1));
     }
     int maximumScore(vector<int>& a, vector<int>& mul) {
-        dp = vector<vector<int>>(1005, vector<int>(1005, INT_MIN));
+        dp = vector<vector<int>>(1000, vector<int>(1000, INT_MIN));
         return h(a, mul, 0, 0, a.size()-1);
     }
 };
